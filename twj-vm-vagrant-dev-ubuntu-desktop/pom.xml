@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (C) 2015 Tawja (http://www.tawja.org)
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.tawja.infra</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <!--<relativePath>../twj-parent/pom.xml</relativePath>-->
+    </parent>
+		
+    <groupId>org.tawja.infra</groupId>
+    <artifactId>twj-vm-vagrant-dev-ubuntu-desktop</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <!--<packaging>pom</packaging>-->
+    <packaging>vagrant-box</packaging>
+
+    <name>Tawja : Infra : VM Vagrant : DEV : Ubuntu Desktop</name>
+    <description>Tawja Platform - Developpment Ubuntu Desktop Vagrant image for VirtuaBx</description>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!--
+                <plugin>
+                    <groupId>net.ju-n.maven.plugins</groupId>
+                    <artifactId>vagrant-maven-plugin</artifactId>
+                    <version>1.0.2</version>
+                    <configuration>
+                        <jruby.launchDirectory>${basedir}/target/target-vagrant</jruby.launchDirectory>
+                        <jruby.sourceDirectory>${basedir}/target/target-vagrant</jruby.sourceDirectory>
+                    </configuration>
+                </plugin>
+                -->
+                <!--
+                <plugin>
+                    <groupId>org.tawja.maven.plugins</groupId>
+                    <artifactId>twj-vagrant-maven-plugin</artifactId>
+                    <version>1.0.0-SNAPSHOT</version>
+                <extensions>true</extensions>
+                </plugin>
+                -->
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.tawja.maven.plugins</groupId>
+                <artifactId>twj-vagrant-maven-plugin</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+                <extensions>true</extensions>
+                <executions>
+                    <execution>
+                        <id>build-vagrant-box</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>build-box</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <!--<version>${maven-resources-plugin.version}</version>-->
+                <version>2.7</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <!-- Needs to be after grunt create-resources task so that maven-properties.json exists -->
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/target-vagrant</outputDirectory>
+                            <resources>          
+                                <resource>
+                                    <directory>${basedir}/src/main/vm</directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>              
+                        </configuration>            
+                    </execution>
+                </executions>
+            </plugin>
+            <!--
+        <plugin>
+          <groupId>net.ju-n.maven.plugins</groupId>
+          <artifactId>vagrant-maven-plugin</artifactId>
+          <version>1.0.2</version>
+          <executions>
+            <execution>
+                          <id>package-vmbox</id>
+                          <phase>compile</phase>
+              <goals>
+                <goal>up</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <jruby.launchDirectory>${basedir}/target/target-vagrant</jruby.launchDirectory>
+            <jruby.sourceDirectory>${basedir}/target/target-vagrant</jruby.sourceDirectory>
+          </configuration>
+        </plugin>
+            -->
+            <!--
+                  <plugin>
+                      <groupId>org.tawja.maven.plugins</groupId>
+                      <artifactId>twj-frontend-maven-plugin</artifactId>
+                      <version>1.0.0-SNAPSHOT</version>
+                      <executions>
+                    <execution>
+                        <id>create-resources</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>create-resources</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>pre-compile</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>npm-offline</goal>
+                            <goal>bower-offline</goal>
+                        </goals>
+                        <configuration>
+                            <useSymbolicLinks>${tawja-useSymbolicLinks}</useSymbolicLinks>
+							<skipFinalExecution>true</skipFinalExecution>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>grunt</goal>
+                        </goals>
+                        <configuration>
+                            <useSymbolicLinks>${tawja-useSymbolicLinks}</useSymbolicLinks>
+                        </configuration>
+                    </execution>
+                          <execution>
+                              <id>clean</id>
+                              <phase>clean</phase>
+                              <goals>
+                                  <goal>clean</goal>
+                              </goals>
+                          </execution>
+                      </executions>
+                  </plugin>
+            -->
+        </plugins>
+    </build>	
+	
+</project>
